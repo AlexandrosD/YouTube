@@ -1,1 +1,21 @@
-README
+YouTube PHP Library
+v0.5.0
+
+A PHP library to retieve a user's video data from YouTube
+Currently only READ operations are supported
+
+Implements the following functions:
+* Uploads :: getUploadsByUser
+* Favorites :: getFavoritesByUser
+* Playlists :: getPlaylistsByUser
+* Playlist :: getPlaylist
+* Playlist entries :: getPlaylistEntry
+* Subscriptions :: getSubscriptionsByUser
+* RelatedVideos :: getRelatedVideos
+
+Supports the usage of a developer key - not required but suggested
+
+Data can be retrieved in the following formats:
+* ATOM
+* RSS 2.0
+* JSON

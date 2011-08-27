@@ -2,10 +2,10 @@
 /**
  * YouTube PHP library
  * 
- * @author alexd3499
- * @copyright alexd3499 2011
+ * @author Alexandros D
+ * @copyright Alexandros D 2011
  * @license GNU/GPL v2
- * @version 0.0.1
+ * @version 0.5.0
  * 
  */
 
@@ -14,61 +14,204 @@ class YouTube {
 	private $_developerKey;
 	private $_lastError;
 	private $_baseUrl;
+	private $_format; /* null = atom ; rss = RSS 2.0 ; json = JSON */
 	
-	public function __construct( $developerKey = NULL , $baseUrl = NULL) {
+	private $_debug;
+	
+	public function __construct( $developerKey = NULL , $baseUrl = NULL , $format = NULL) {
 		$this->_developerKey = $developerKey;
 		if ( $baseUrl ) {
 			$this->_baseUrl = $baseUrl;
 		}
 		else {
-			$this->_baseUrl = "http://gdata.youtube.com/feeds/api/";
+			$this->_baseUrl = "http://gdata.youtube.com/feeds/";
 		}
+		$this->_format = $format;
+		$this->_debug = FALSE;
 	}
 	
-	/*
-	 * Public functions
+	/***************************************************************************
+	****************************************************************************
+	*** Public functions
+	*****************************************************************************
+	*****************************************************************************/
+	/**
+	 * Returns an Exception object about the last error that occured
+	 * 
+	 * @return Exception
 	 */
-	
 	public function getLastError() {
 		return $this->_lastError;
 	}
 	
 	/**
 	* Load a specific user's playlists
-	* 
-	* @name getPlaylistsByUser
+	*
+	* @param String $username The username
+	* @param int $maxResults The maximum results to return
+	* @param int $startIndex If set then it will skip the first $startIndex-1 entries
+	* @return String
+	*/
+	public function getPlaylistsByUser ( $username , $maxResults = 0 , $startIndex = 0 ) {
+		$url = $this->_baseUrl . "api/users/" . $username . "/playlists";
+		
+		$params = Array();
+		if ($maxResults !=0 && $startIndex !=0) {
+			$params[] = "max-results=" . $maxResults;
+			$params[] = "start-index=" . $startIndex;
+		}
+		if ($maxResults == 0 && $startIndex != 0) {
+			$params[] = "start-index=" . $startIndex;
+		}
+		if ($maxResults != 0 && $startIndex == 0) {
+			$params[] = "max-results=" . $maxResults;
+		}
+		
+		return $this->_httpGet($url , $params);
+	}
+	
+	/**
+	* Load a specific user's favorite videos
+	*
 	* @param String $username The username
 	* @return String
 	*/
-	public function getPlaylistsByUser ( $username ) {
-		$url = $this->_baseUrl . "users/" . $username . "/playlists";
+	public function getFavoritesByUser ( $username ) {
+		$url = $this->_baseUrl . "api/users/" . $username . "/favorites";
 		return $this->_httpGet($url);
 	}
 	
 	/**
-	* Helper function that transforms xml to array
+	* Load a specific playlist
 	*
-	* @name xmlToArray
-	* @param String $xml The XML string to transform
-	* @return Array
+	* @param String $playlist The playlist id
+	* @return String
 	*/
-	public function xmlToArray ( $xml ) {
-		//TODO: add implementation..
-		return $xml;
+	public function getPlaylist ( $playlist ) {
+		$url = $this->_baseUrl . "api/playlists/" . $playlist;
+		return $this->_httpGet($url);
 	}
 	
-	/*
-	 * Private functions
-	 */
+	/**
+	* Load a specific playlist entry
+	*
+	* @param String $playlist The playlist id
+	* @param String $entry The entry id
+	* @return String
+	*/
+	public function getPlaylistEntry ( $playlist , $entry ) {
+		$url = $this->_baseUrl . "api/playlists/" . $playlist . "/" . $entry;
+		return $this->_httpGet($url);
+	}
 	
+	/**
+	* Load a specific user's subscriptions
+	*
+	* @param String $username The username
+	* @param int $maxResults The maximum results to return
+	* @param int $startIndex If set then it will skip the first $startIndex-1 entries
+	* @return String
+	*/
+	public function getSubscriptionsByUser ( $username , $maxResults = 0 , $startIndex = 0 ) {
+		$url = $this->_baseUrl . "base/users/" . $username . "/subscriptions";
+	
+		$params = Array();
+		if ($maxResults !=0 && $startIndex !=0) {
+			$params[] = "max-results=" . $maxResults;
+			$params[] = "start-index=" . $startIndex;
+		}
+		if ($maxResults == 0 && $startIndex != 0) {
+			$params[] = "start-index=" . $startIndex;
+		}
+		if ($maxResults != 0 && $startIndex == 0) {
+			$params[] = "max-results=" . $maxResults;
+		}
+		
+		return $this->_httpGet($url , $params);
+	}
+	
+	/**
+	* Load a specific user's uploads
+	*
+	* @param String $username The username
+	* @param int $maxResults The maximum results to return
+	* @param int $startIndex If set then it will skip the first $startIndex-1 entries
+	* @param String $orderby If null, will sort by relevance. Other options are 'published' and 'viewCount'
+	* @return String
+	*/
+	public function getUploadsByUser ( $username , $maxResults = 0 , $startIndex = 0 , $orderby = NULL) {
+		$url = $this->_baseUrl . "base/users/" . $username . "/uploads";
+	
+		$params = Array();
+		if ($maxResults !=0 && $startIndex !=0) {
+			$params[] = "max-results=" . $maxResults;
+			$params[] = "start-index=" . $startIndex;
+		}
+		if ($maxResults == 0 && $startIndex != 0) {
+			$params[] = "start-index=" . $startIndex;
+		}
+		if ($maxResults != 0 && $startIndex == 0) {
+			$params[] = "max-results=" . $maxResults;
+		}
+		if ($orderby != 0 ) {
+			$params[] = "orderby=" . $orderby;
+		}
+	
+		return $this->_httpGet($url , $params);
+	}
+	
+	/**
+	* Load a video's related videos
+	*
+	* @param String $videoId The video id
+	* @param int $maxResults The maximum results to return
+	* @param int $startIndex If set then it will skip the first $startIndex-1 entries
+	* @return String
+	*/
+	public function getRelatedVideos ( $videoId , $maxResults = 0 , $startIndex = 0 ) {
+		$url = $this->_baseUrl . "base/videos/" . $videoId . "/related";
+	
+		$params = Array();
+		if ($maxResults !=0 && $startIndex !=0) {
+			$params[] = "max-results=" . $maxResults;
+			$params[] = "start-index=" . $startIndex;
+		}
+		if ($maxResults == 0 && $startIndex != 0) {
+			$params[] = "start-index=" . $startIndex;
+		}
+		if ($maxResults != 0 && $startIndex == 0) {
+			$params[] = "max-results=" . $maxResults;
+		}
+	
+		return $this->_httpGet($url , $params);
+	}
+	
+	/***************************************************************************
+	****************************************************************************
+	*** Private functions
+	*****************************************************************************
+	*****************************************************************************/
 	/**
 	* Perform an HTTP get request
 	*
-	* @name _httpGet
 	* @param String $url The url to GET
+	* @param Array $params An array of parameters
 	* @return String
 	*/
-	private function _httpGet( $url ) {
+	private function _httpGet( $url , $params = NULL) {
+		if ($this->_format != NULL) {
+			$params[] = "alt=" . $this->_format;
+		}
+		
+		if ( count($params) ) {
+			$queryString = implode("&", $params);
+			$url .= "?" . $queryString;
+		}
+		
+		if ($this->_debug) {
+			echo "URL: $url";
+		}
+		
 		//Initialize curl
 		$ch = curl_init();
 		
@@ -77,7 +220,6 @@ class YouTube {
 		
 		//HTTP headers
 		$headers = array(
-			//'Content-type: application/x-www-form-urlencoded; charset=UTF-8',
 			'GData-Version: 2',
 			'Cache-Control: no-cache'
 		);
