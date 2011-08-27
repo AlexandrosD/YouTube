@@ -5,7 +5,9 @@
  * @author Alexandros D
  * @copyright Alexandros D 2011
  * @license GNU/GPL v2
- * @version 0.5.0
+ * @since 0.0.1
+ * 
+ * @todo add a function to retrieve comments
  * 
  */
 
@@ -209,7 +211,7 @@ class YouTube {
 		}
 		
 		if ($this->_debug) {
-			echo "URL: $url";
+			echo "URL: $url<br /><br />";
 		}
 		
 		//Initialize curl

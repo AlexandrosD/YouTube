@@ -1,8 +1,12 @@
 <?php
 
-require_once 'youtube.php';
+require_once 'youtube.playlist.php';
 
-$youtube = new YouTube();
+$playlist = new YouTubePlaylist("E0B60191A5F3786A");
 
-echo $youtube->getPlaylist("5332434504531E00");
+echo "<h1>Generating videolist:</h1>";
+foreach ($playlist->getVideos() as $v) {
+	echo "<h2>" . $v->title . "</h2>";
+	print_r($v);
+}
 

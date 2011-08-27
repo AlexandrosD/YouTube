@@ -1,5 +1,5 @@
 YouTube PHP Library
-v0.5.0
+Current Version: v0.6.0
 
 A PHP library to retieve a user's video data from YouTube
 Currently only READ operations are supported
@@ -19,3 +19,13 @@ Data can be retrieved in the following formats:
 * ATOM
 * RSS 2.0
 * JSON
+
+===== ToDo =====
+* YouTubeVideoComments class to hold information about comments on videos
+* YouTubeVideoUser class to hold informaiton about a user (its playlists / fav videos / comments, etc..)
+
+===== CHANGELOG =====
+v0.6.0 (2011/08/27 - 16:50) changelog:
+* Added the following classes:
+	* YouTubeVideo - A representation of a Video (TODO: add comments soon ;) ) - a class for simplifying video loading
+	* YouTubePlaylist - A representation of a Playlist - a class for simplifying playlist loading
