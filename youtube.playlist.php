@@ -16,16 +16,18 @@ class YouTubePlaylist {
 	private $_videos;
 	private $_title;
 	private $_id;
+	private $_developerKey;
 	
 	/**
 	* Load playlist data
 	*
 	* @param String $playlistId The playlist id
 	*/
-	public function __construct( $playlistId ) {
+	public function __construct( $playlistId , $developerKey = NULL ) {
 		$this->_id = $playlistId;
 		$this->_videos = array();
 		$this->_loadVideos();
+		$this->_developerKey = $developerKey;
 	}
 	
 	/**
@@ -69,7 +71,7 @@ class YouTubePlaylist {
 	}
 	
 	private function _loadVideos(){
-		$youtube = new YouTube();
+		$youtube = new YouTube( $this->_developerKey );
 		$playlist =  $youtube->getPlaylist( $this->_id );
 		
 		$xml = new SimpleXMLElement($playlist);

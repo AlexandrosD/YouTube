@@ -1,5 +1,5 @@
 YouTube PHP Library
-Current Version: v0.6.0
+Current Version: v0.6.1
 
 A PHP library to retieve a user's video data from YouTube
 Currently only READ operations are supported
@@ -29,3 +29,7 @@ v0.6.0 (2011/08/27 - 16:50) changelog:
 * Added the following classes:
 	* YouTubeVideo - A representation of a Video (TODO: add comments soon ;) ) - a class for simplifying video loading
 	* YouTubePlaylist - A representation of a Playlist - a class for simplifying playlist loading
+	
+v0.6.1 (2011/08/27 - 16:55) changelog:
+* Correction: Added developer key as a parameter to YouTubePlaylist class
+
