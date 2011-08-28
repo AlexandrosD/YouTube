@@ -11,12 +11,12 @@
 
 require_once 'youtube.php';
 require_once 'youtube.video.php';
+require_once 'youtube.videolist.php';
 
-class YouTubePlaylist {
-	private $_videos;
+class YouTubePlaylist extends YouTubeVideoList {
 	private $_title;
+	private $_subtitle;
 	private $_id;
-	private $_developerKey;
 	
 	/**
 	* Load playlist data
@@ -25,60 +25,48 @@ class YouTubePlaylist {
 	*/
 	public function __construct( $playlistId , $developerKey = NULL ) {
 		$this->_id = $playlistId;
-		$this->_videos = array();
-		$this->_loadVideos();
 		$this->_developerKey = $developerKey;
 	}
 	
 	/**
-	* Fetch playlist's videos
+	* Load Playlist
 	*
-	* @return Array A YouTubeVideo() array holding playlist's videos
+	* @return boolean
 	*/
-	public function getVideos() {
-		return $this->_videos;
+	public function loadPlaylist( $maxResults = 0 , $startIndex = 0 ) {
+		$this->_maxResults = $maxResults;
+		$this->_startIndex = $startIndex;
+		return $this->_loadVideos();
 	}
 	
 	/**
 	* Fetch playlist's title
 	*
-	* @return String Tha playlist's title
+	* @return String The playlist's title
 	*/
 	public function getTitle() {
 		return $this->_title;
 	}
 	
 	/**
-	* Count playlist's videos
+	* Fetch playlist's subtitle
 	*
-	* @return int The number of videos
+	* @return String The playlist's title
 	*/
-	public function getVideosCount() {
-		return count( $this->_videos );
-	}
-	
-	/**
-	* Calculate playlist's duration
-	*
-	* @return int The total playlist duration
-	*/
-	public function getTotalDuration() {
-		$duration = 0;
-		foreach ($this->_videos as $v) {
-			$duration += (int) $duration;
-		}
-		return $duration;
+	public function getSubtitle() {
+		return $this->_subtitle;
 	}
 	
 	private function _loadVideos(){
 		$youtube = new YouTube( $this->_developerKey );
-		$playlist =  $youtube->getPlaylist( $this->_id );
+		$playlist =  $youtube->getPlaylist( $this->_id , $this->_maxResults , $this->_startIndex );
 		
-		$xml = new SimpleXMLElement($playlist);
+		//load playlist data
+		$xml = new SimpleXMLElement( $playlist );
+		$this->_title = (string) $xml->title;
+		$this->_subtitle = (string) $xml->subtitle;
 		
-		foreach ( $xml->entry as $entry ) {
-			$video = new YouTubeVideo( $entry );
-			$this->_videos[] = $video;
-		}
+		//load videos
+		return parent::populate( $playlist);
 	}
 }

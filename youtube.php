@@ -57,6 +57,10 @@ class YouTube {
 	public function getPlaylistsByUser ( $username , $maxResults = 0 , $startIndex = 0 ) {
 		$url = $this->_baseUrl . "api/users/" . $username . "/playlists";
 		
+		//YouTube limits maxResults to 50
+		if ( $maxResults > 50 )
+			$maxResults = 50;
+		
 		$params = Array();
 		if ($maxResults !=0 && $startIndex !=0) {
 			$params[] = "max-results=" . $maxResults;
@@ -78,9 +82,26 @@ class YouTube {
 	* @param String $username The username
 	* @return String
 	*/
-	public function getFavoritesByUser ( $username ) {
+	public function getFavoritesByUser ( $username , $maxResults = 0 , $startIndex = 0 ) {
 		$url = $this->_baseUrl . "api/users/" . $username . "/favorites";
-		return $this->_httpGet($url);
+		
+		//YouTube limits maxResults to 50
+		if ( $maxResults > 50 )
+			$maxResults = 50;
+		
+		$params = Array();
+		if ($maxResults !=0 && $startIndex !=0) {
+			$params[] = "max-results=" . $maxResults;
+			$params[] = "start-index=" . $startIndex;
+		}
+		if ($maxResults == 0 && $startIndex != 0) {
+			$params[] = "start-index=" . $startIndex;
+		}
+		if ($maxResults != 0 && $startIndex == 0) {
+			$params[] = "max-results=" . $maxResults;
+		}
+		
+		return $this->_httpGet($url , $params);
 	}
 	
 	/**
@@ -89,9 +110,26 @@ class YouTube {
 	* @param String $playlist The playlist id
 	* @return String
 	*/
-	public function getPlaylist ( $playlist ) {
+	public function getPlaylist ( $playlist , $maxResults = 0 , $startIndex = 0 ) {
 		$url = $this->_baseUrl . "api/playlists/" . $playlist;
-		return $this->_httpGet($url);
+		
+		//YouTube limits maxResults to 50
+		if ( $maxResults > 50 )
+			$maxResults = 50;
+		
+		$params = Array();
+		if ($maxResults !=0 && $startIndex !=0) {
+			$params[] = "max-results=" . $maxResults;
+			$params[] = "start-index=" . $startIndex;
+		}
+		if ($maxResults == 0 && $startIndex != 0) {
+			$params[] = "start-index=" . $startIndex;
+		}
+		if ($maxResults != 0 && $startIndex == 0) {
+			$params[] = "max-results=" . $maxResults;
+		}
+		
+		return $this->_httpGet($url , $params);
 	}
 	
 	/**
@@ -116,6 +154,10 @@ class YouTube {
 	*/
 	public function getSubscriptionsByUser ( $username , $maxResults = 0 , $startIndex = 0 ) {
 		$url = $this->_baseUrl . "base/users/" . $username . "/subscriptions";
+		
+		//YouTube limits maxResults to 50
+		if ( $maxResults > 50 )
+			$maxResults = 50;
 	
 		$params = Array();
 		if ($maxResults !=0 && $startIndex !=0) {
@@ -143,6 +185,10 @@ class YouTube {
 	*/
 	public function getUploadsByUser ( $username , $maxResults = 0 , $startIndex = 0 , $orderby = NULL) {
 		$url = $this->_baseUrl . "base/users/" . $username . "/uploads";
+		
+		//YouTube limits maxResults to 50
+		if ( $maxResults > 50 )
+			$maxResults = 50;
 	
 		$params = Array();
 		if ($maxResults !=0 && $startIndex !=0) {
@@ -172,6 +218,10 @@ class YouTube {
 	*/
 	public function getRelatedVideos ( $videoId , $maxResults = 0 , $startIndex = 0 ) {
 		$url = $this->_baseUrl . "base/videos/" . $videoId . "/related";
+		
+		//YouTube limits maxResults to 50
+		if ( $maxResults > 50 )
+			$maxResults = 50;
 	
 		$params = Array();
 		if ($maxResults !=0 && $startIndex !=0) {
