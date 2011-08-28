@@ -7,9 +7,10 @@
 * @license GNU/GPL v2
 * @since 0.6.0
 *
-* @todo add comments support
 * 
 */
+
+require_once 'youtube.video.comments.php';
 
 class YouTubeVideo {
 	public $title;
@@ -25,16 +26,17 @@ class YouTubeVideo {
 	public $uploaded;
 	public $viewCount;
 	public $favoriteCount;
-	
-	//TODO
 	public $comments;
+	
+	private $_developerKey;
 	
 	/**
 	* Load video data from xml atom simplexml object
 	*
 	* @param SimpleXMLElement $videoData
 	*/
-	public function __construct( $videoData ) {
+	public function __construct( $videoData , $developerKey = NULL ) {
+		$this->_developerKey = $developerKey;
 		$this->_load($videoData);
 	}
 	
@@ -85,14 +87,6 @@ class YouTubeVideo {
 		//content - full player - suppress errors because not all videos have this attribute
 		@$this->content = (string) $media->group->content->attributes()->url;
 		
-		//comments
-		/*
-		 * 	<gd:comments>
-		 * 		<gd:feedLink href='http://gdata.youtube.com/feeds/api/videos/yT6Ti6ZUgSQ/comments' countHint='641'/>
-		 * 	</gd:comments>
-		 */
-		//TODO: Implement YouTubeVideoComments class & getCommentsByVideo functions - use them to fetch comments..
-		
 		//rating - yt:rating - numDislikes
 		$this->dislikes = (int) $yt->rating->attributes()->numDislikes;
 		
@@ -113,6 +107,9 @@ class YouTubeVideo {
 		
 		//statistics - favoriteCount
 		$this->favoriteCount = (int) $yt->statistics->attributes()->favoriteCount;
+		
+		//comments
+		$this->comments = new YouTubeVideoComments($this->videoId , $this->_developerKey );
 	}
 	
 }

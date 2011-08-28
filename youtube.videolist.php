@@ -13,12 +13,12 @@ require_once 'youtube.php';
 require_once 'youtube.video.php';
 
 class YouTubeVideoList {
-	private $_videos;
-	private $_totalVideos;
-	private $_maxResults;
-	private $_startIndex;
-	private $_youtube;
-	private $_developerKey;
+	protected $_videos;
+	protected $_totalVideos;
+	protected $_maxResults;
+	protected $_startIndex;
+	protected $_youtube;
+	protected $_developerKey;
 	
 	/**
 	* Constructor
@@ -79,15 +79,14 @@ class YouTubeVideoList {
 	* @param String $format Supported values are 'atom' , 'rss' , 'json'
 	* @return boolean
 	*/
-	public function populate( $data , $format = "atom") {
-		if ( $format == 'atom' )
-			return $this->_parseAtom( $data);
-		
+	public function populate( $data , $format = "atom") {		
 		if ( $format == 'rss' )
 			return $this->_parseRss( $data);
 		
 		if ( $format == 'json' )
 			return $this->_parseJson( $data);
+		/* else */
+		return $this->_parseAtom( $data);
 	}	
 	
 	/**
@@ -126,7 +125,7 @@ class YouTubeVideoList {
 		//fetch videos
 		$this->_videos = array();
 		foreach ( $xml->entry as $entry ) {
-			$video = new YouTubeVideo( $entry );
+			$video = new YouTubeVideo( $entry , $this->_developerKey );
 			$this->_videos[] = $video;
 		}
 		

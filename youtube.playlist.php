@@ -67,6 +67,6 @@ class YouTubePlaylist extends YouTubeVideoList {
 		$this->_subtitle = (string) $xml->subtitle;
 		
 		//load videos
-		return parent::populate( $playlist);
+		return parent::populate( $playlist );
 	}
 }

@@ -7,7 +7,6 @@
  * @license GNU/GPL v2
  * @since 0.0.1
  * 
- * @todo add a function to retrieve comments
  * 
  */
 
@@ -153,7 +152,7 @@ class YouTube {
 	* @return String
 	*/
 	public function getSubscriptionsByUser ( $username , $maxResults = 0 , $startIndex = 0 ) {
-		$url = $this->_baseUrl . "base/users/" . $username . "/subscriptions";
+		$url = $this->_baseUrl . "api/users/" . $username . "/subscriptions";
 		
 		//YouTube limits maxResults to 50
 		if ( $maxResults > 50 )
@@ -184,7 +183,7 @@ class YouTube {
 	* @return String
 	*/
 	public function getUploadsByUser ( $username , $maxResults = 0 , $startIndex = 0 , $orderby = NULL) {
-		$url = $this->_baseUrl . "base/users/" . $username . "/uploads";
+		$url = $this->_baseUrl . "api/users/" . $username . "/uploads";
 		
 		//YouTube limits maxResults to 50
 		if ( $maxResults > 50 )
@@ -217,8 +216,40 @@ class YouTube {
 	* @return String
 	*/
 	public function getRelatedVideos ( $videoId , $maxResults = 0 , $startIndex = 0 ) {
-		$url = $this->_baseUrl . "base/videos/" . $videoId . "/related";
+		$url = $this->_baseUrl . "api/videos/" . $videoId . "/related";
 		
+		//YouTube limits maxResults to 50
+		if ( $maxResults > 50 )
+			$maxResults = 50;
+	
+		$params = Array();
+		if ($maxResults !=0 && $startIndex !=0) {
+			$params[] = "max-results=" . $maxResults;
+			$params[] = "start-index=" . $startIndex;
+		}
+		if ($maxResults == 0 && $startIndex != 0) {
+			$params[] = "start-index=" . $startIndex;
+		}
+		if ($maxResults != 0 && $startIndex == 0) {
+			$params[] = "max-results=" . $maxResults;
+		}
+	
+		return $this->_httpGet($url , $params);
+	}
+	
+	/**
+	* Load a video's comments
+	*
+	* @since 0.7.5
+	*
+	* @param String $videoId The video id
+	* @param int $maxResults The maximum results to return
+	* @param int $startIndex If set then it will skip the first $startIndex-1 entries
+	* @return String
+	*/
+	public function getComments ( $videoId , $maxResults = 0 , $startIndex = 0 ) {
+		$url = $this->_baseUrl . "api/videos/" . $videoId . "/comments";
+	
 		//YouTube limits maxResults to 50
 		if ( $maxResults > 50 )
 			$maxResults = 50;
@@ -279,7 +310,7 @@ class YouTube {
 		//Set dev key if has been provided
 		if ( $this->_developerKey ) {
 			$headers[] = 'X-GData-Key: key=' . $this->_developerKey;
-		}
+		} 
 		
 		//Set HTTP headers
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers );
