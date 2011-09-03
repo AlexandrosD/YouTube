@@ -268,6 +268,17 @@ class YouTube {
 	
 		return $this->_httpGet($url , $params);
 	}
+    
+    /**
+    * Get a specific user's details
+	*
+	* @param String $username The user's id
+	* @return String
+	*/
+	public function getUserData ( $username ) {
+		$url = $this->_baseUrl . "api/users/" . $username;
+		return $this->_httpGet($url);
+	}
 	
 	/***************************************************************************
 	****************************************************************************
