@@ -103,7 +103,7 @@ class YouTubeUser {
         $this->_channelTitle = (string) $xml->entry->title;
         $this->_gender = (string) $yt->age;
         $this->_age = (int) $yt->gender;
-        $this->_location (string) $yt->location;
+        $this->_location = (string) $yt->location;
         
         $this->_loaded = TRUE;
     }
