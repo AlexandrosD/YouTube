@@ -100,7 +100,7 @@ class YouTubeUser {
         $namespaces = $xml->getNameSpaces(true);
     	$yt = $entry->children($namespaces['yt']);
         
-        $this->_channelTitle = (string) $xml->entry->title;
+        $this->_channelTitle = (string) $xml->title;
         $this->_gender = (string) $yt->age;
         $this->_age = (int) $yt->gender;
         $this->_location = (string) $yt->location;
