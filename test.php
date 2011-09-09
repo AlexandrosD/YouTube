@@ -13,7 +13,7 @@ echo "<h2>" . $playlist->getSubtitle() . "</h2>";
 echo "<h1>Generating videolist:</h1>";
 $videos = $playlist->getVideos();
 
-echo "getVideosCount() = " . $uploads->getVideosCount() . "<br /><br />";
+echo "getVideosCount() = " . $playlist->getVideosCount() . "<br /><br />";
 
 foreach ($videos as $v) {
 	echo "<h2>" . $v->title . "</h2>";
