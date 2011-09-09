@@ -131,8 +131,9 @@ class YouTubeVideoList {
 		
 		//fetch list data
 		$namespaces = $xml->getNameSpaces(true);
-		$openSearch = $entry->children($namespaces['openSearch']);
-		
+		//$openSearch = $entry->children($namespaces['openSearch']);
+		$openSearch = $xml->children($namespaces['openSearch']);
+        
 		$this->_totalVideos = (int) $openSearch->totalResults;
 		$this->_startIndex = (int) $openSearch->startIndex;
 		$this->_maxResults = (int) $openSearch->itemsPerPage;
