@@ -26,7 +26,7 @@ echo "<pre>First Comment of the first video is " . $c[0]->content . "</pre>";
 
 echo "<h1>USERS TESTS</h1>";
 
-$user = new YouTubeUser( "alexd3499" );
+$user = new YouTubeUser( "youtube" );
 
 $userinfo = $user->getInfo();
 
