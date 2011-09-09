@@ -87,11 +87,11 @@ class YouTubeVideo {
 		//content - full player - suppress errors because not all videos have this attribute
 		@$this->content = (string) $media->group->content->attributes()->url;
 		
-		//rating - yt:rating - numDislikes
-		$this->dislikes = (int) $yt->rating->attributes()->numDislikes;
+		//rating - yt:rating - numDislikes - suppress errors because not all videos have this attribute
+		@$this->dislikes = (int) $yt->rating->attributes()->numDislikes;
 		
-		//rating - yt:rating - numLikes
-		$this->likes = (int) $yt->rating->attributes()->numLikes;
+		//rating - yt:rating - numLikes - suppress errors because not all videos have this attribute
+		@$this->likes = (int) $yt->rating->attributes()->numLikes;
 		
 		//video id
 		$this->videoId = (string) $media_yt->videoid;
