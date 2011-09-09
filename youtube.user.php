@@ -20,11 +20,14 @@
 class YouTubeUser {
     
     private $_loaded;
+    
     private $_username;
     private $_channelTitle;
     private $_gender;
     private $_age;
     private $_location;
+    
+    private $_youtube;
     
     private $_playlists;
     private $_playlists_maxResults;
@@ -40,9 +43,10 @@ class YouTubeUser {
     
     private $_developerKey;
     
-    public function __construct ( $username , $developerKey ) {
+    public function __construct ( $username , $developerKey = NULL ) {
         $this->_username = $username;
         $this->_developerKey = $developerKey;
+        $this->_youtube = new YouTube( $this->_developerKey );
     }
     
     /**
@@ -89,7 +93,18 @@ class YouTubeUser {
      ****************************************************************/
     
     private function _loadInfo() {
-        //TODO
+        $data = $this->_youtube->getUserData( $this->_username );
+        
+        $xml = new SimpleXMLElement( $data );
+        
+        $namespaces = $xml->getNameSpaces(true);
+    	$yt = $entry->children($namespaces['yt']);
+        
+        $this->_channelTitle = (string) $xml->entry->title;
+        $this->_gender = (string) $yt->age;
+        $this->_age = (int) $yt->gender;
+        $this->_location (string) $yt->location;
+        
         $this->_loaded = TRUE;
     }
     

@@ -1,6 +1,7 @@
 <?php
 
 require_once 'youtube.playlist.php';
+require_once 'youtube.user.php';
 
 //$playlist = new YouTubePlaylist("E0B60191A5F3786A");
 $playlist = new YouTubePlaylist("C5768E547E4661D3");
@@ -19,4 +20,12 @@ foreach ($videos as $v) {
 $videos[0]->comments->loadComments();
 $c=$videos[0]->comments->getComments();
 echo "<pre>First Comment of the first video is " . $c[0]->content . "</pre>";
+
+echo "<h1>USERS TESTS</h1>";
+
+$user = new YouTubeUser( "alexd3499" );
+
+$userinfo = $user->getInfo();
+
+print_r ( $userinfo );
 
