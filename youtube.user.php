@@ -101,8 +101,8 @@ class YouTubeUser {
     	$yt = $xml->children($namespaces['yt']);
         
         $this->_channelTitle = (string) $xml->title;
-        $this->_gender = (string) $yt->age;
-        $this->_age = (int) $yt->gender;
+        $this->_age = (string) $yt->age;
+        $this->_gender = (string) $yt->gender;
         $this->_location = (string) $yt->location;
         
         $this->_loaded = TRUE;
@@ -113,7 +113,10 @@ class YouTubeUser {
     }
     
     public function _getUploads( $maxResults = 0 , $startIndex = 0 ) {
-        //TODO
+        $uploads = new YouTubeVideoList( $this->_developerKey );
+        $uploads->load( "UploadsByUser" , $this->_username , $maxResults , $startIndex );
+        
+        $this->_uploads = $uploads;
     }
     
     public function _getSubscriptions( $maxResults = 0 , $startIndex = 0 ) {

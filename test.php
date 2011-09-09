@@ -29,3 +29,10 @@ $userinfo = $user->getInfo();
 
 print_r ( $userinfo );
 
+echo "<hr />"'
+
+$uploads = $user->getUploads();
+
+print_r( $uploads );
+
+
