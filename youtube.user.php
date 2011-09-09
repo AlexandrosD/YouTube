@@ -98,7 +98,7 @@ class YouTubeUser {
         $xml = new SimpleXMLElement( $data );
         
         $namespaces = $xml->getNameSpaces(true);
-    	$yt = $entry->children($namespaces['yt']);
+    	$yt = $xml->children($namespaces['yt']);
         
         $this->_channelTitle = (string) $xml->title;
         $this->_gender = (string) $yt->age;
