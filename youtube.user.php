@@ -108,18 +108,18 @@ class YouTubeUser {
         $this->_loaded = TRUE;
     }
     
-    private function _getPlaylists( $maxResults = 0 , $startIndex = 0 ) {
+    private function _loadPlaylists( $maxResults = 0 , $startIndex = 0 ) {
         //TODO
     }
     
-    public function _getUploads( $maxResults = 0 , $startIndex = 0 ) {
+    public function _loadUploads( $maxResults = 0 , $startIndex = 0 ) {
         $uploads = new YouTubeVideoList( $this->_developerKey );
         $uploads->load( "UploadsByUser" , $this->_username , $maxResults , $startIndex );
         
         $this->_uploads = $uploads;
     }
     
-    public function _getSubscriptions( $maxResults = 0 , $startIndex = 0 ) {
+    public function _loadSubscriptions( $maxResults = 0 , $startIndex = 0 ) {
         //TODO - Phase II
         return FALSE;
     }
