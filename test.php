@@ -44,6 +44,7 @@ echo "getVideosCount() = " . $uploads->getVideosCount() . "<br /><br />";
 $videos = $uploads->getVideos();
 
 echo "Count=" . count ($videos);
+/*
 foreach ($videos as $v) {
 	echo "<h2>" . "<a href='". $v->link ."'>";
 	echo "<img src='". $v->thumbnails[0]->url ."' width='". $v->thumbnails[0]->width ."' height='". $v->thumbnails[0]->height ."' />&nbsp;";
@@ -58,6 +59,27 @@ foreach ($videos as $v) {
 $videos[0]->comments->loadComments();
 $c=$videos[0]->comments->getComments();
 echo "<pre>First Comment of the first video is " . $c[0]->content . "</pre>";
+*/
+
+$pls = $user->getPlaylists();
+$pl = $pls[0];
+
+$pl->loadPlaylist();
+
+echo "<h2>Playlist Title: " . $pl->getTitle() . "</h2>";
+
+$videos = $pl->getVideos();
+
+foreach ($videos as $v) {
+	echo "<h2>" . "<a href='". $v->link ."'>";
+	echo "<img src='". $v->thumbnails[0]->url ."' width='". $v->thumbnails[0]->width ."' height='". $v->thumbnails[0]->height ."' />&nbsp;";
+	echo $v->title . "</a></h2>";
+
+	echo '<iframe width="560" height="345" src="'. $v->content .'" frameborder="0" allowfullscreen></iframe>';
+
+	echo "<br />";
+	print_r($v);
+}
 
 
 
