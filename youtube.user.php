@@ -109,10 +109,32 @@ class YouTubeUser {
     }
     
     private function _loadPlaylists( $maxResults = 0 , $startIndex = 0 ) {
-        //TODO
+    	$this->_playlists_maxResults = $maxResults;
+    	$this->_playlists_startIndex = $startIndex;
+    	
+        $data = $this->_youtube->getPlaylistsByUser( $this->_username , $maxResults , $startIndex );
+        
+        $ids = array();
+        $xml = new SimpleXMLElement( $data );
+
+        foreach ($xml->entry as $playlist) {
+        	$namespaces = $playlist->getNamespaces(true);
+        	$yt = $playlist->children($namespaces['yt']);
+        	$ids[] = $yt->playlistId;
+        }
+        
+        $playlists = array();
+        foreach ($ids as $id) {
+        	$playlists[] = new YouTubePlaylist($id , $this->_developerKey);
+        }
+        
+        $this->_playlists = $playlists;
     }
     
     public function _loadUploads( $maxResults = 0 , $startIndex = 0 ) {
+    	$this->_uploads_maxResults = $maxResults;
+    	$this->_uploads_startIndex = $startIndex;
+    	
         $uploads = new YouTubeVideoList( $this->_developerKey );
         $uploads->load( "UploadsByUser" , $this->_username , $maxResults , $startIndex );
         
