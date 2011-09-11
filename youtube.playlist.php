@@ -27,6 +27,15 @@ class YouTubePlaylist extends YouTubeVideoList {
 		$this->_id = $playlistId;
 		$this->_developerKey = $developerKey;
 	}
+    
+    /**
+    * Get Playlist ID
+	*
+	* @return int the Playlist ID
+	*/
+	public function getID() {
+		return $this->_id;
+	}
 	
 	/**
 	* Load Playlist
