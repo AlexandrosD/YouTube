@@ -41,10 +41,23 @@ $uploads = $user->getUploads();
 echo "getVideosCount() = " . $uploads->getVideosCount() . "<br /><br />";
 //print_r( $uploads );
 
-foreach ($uploads as $v) {
-	echo "<h2>" . $v->title . "</h2>";
+$videos = $uploads->getVideos();
+
+echo "Count=" . count ($videos);
+foreach ($videos as $v) {
+	echo "<h2>" . "<a href='". $v->link ."'>";
+	echo "<img src='". $v->thumbnails[0]->url ."' width='". $v->thumbnails[0]->width ."' height='". $v->thumbnails[0]->height ."' />&nbsp;";
+	echo $v->title . "</a></h2>";
+	
+	echo '<iframe width="560" height="345" src="'. $v->content .'" frameborder="0" allowfullscreen></iframe>';
+	
+	echo "<br />";	
 	print_r($v);
 }
+
+$videos[0]->comments->loadComments();
+$c=$videos[0]->comments->getComments();
+echo "<pre>First Comment of the first video is " . $c[0]->content . "</pre>";
 
 
 
