@@ -60,17 +60,7 @@ class YouTube {
 		if ( $maxResults > 50 )
 			$maxResults = 50;
 		
-		$params = Array();
-		if ($maxResults !=0 && $startIndex !=0) {
-			$params[] = "max-results=" . $maxResults;
-			$params[] = "start-index=" . $startIndex;
-		}
-		if ($maxResults == 0 && $startIndex != 0) {
-			$params[] = "start-index=" . $startIndex;
-		}
-		if ($maxResults != 0 && $startIndex == 0) {
-			$params[] = "max-results=" . $maxResults;
-		}
+        $params = $this->_getParams( $maxResults , $startIndex );
 		
 		return $this->_httpGet($url , $params);
 	}
@@ -88,17 +78,7 @@ class YouTube {
 		if ( $maxResults > 50 )
 			$maxResults = 50;
 		
-		$params = Array();
-		if ($maxResults !=0 && $startIndex !=0) {
-			$params[] = "max-results=" . $maxResults;
-			$params[] = "start-index=" . $startIndex;
-		}
-		if ($maxResults == 0 && $startIndex != 0) {
-			$params[] = "start-index=" . $startIndex;
-		}
-		if ($maxResults != 0 && $startIndex == 0) {
-			$params[] = "max-results=" . $maxResults;
-		}
+        $params = $this->_getParams( $maxResults , $startIndex );
 		
 		return $this->_httpGet($url , $params);
 	}
@@ -116,17 +96,7 @@ class YouTube {
 		if ( $maxResults > 50 )
 			$maxResults = 50;
 		
-		$params = Array();
-		if ($maxResults !=0 && $startIndex !=0) {
-			$params[] = "max-results=" . $maxResults;
-			$params[] = "start-index=" . $startIndex;
-		}
-		if ($maxResults == 0 && $startIndex != 0) {
-			$params[] = "start-index=" . $startIndex;
-		}
-		if ($maxResults != 0 && $startIndex == 0) {
-			$params[] = "max-results=" . $maxResults;
-		}
+		$params = $this->_getParams( $maxResults , $startIndex );
 		
 		return $this->_httpGet($url , $params);
 	}
@@ -158,17 +128,7 @@ class YouTube {
 		if ( $maxResults > 50 )
 			$maxResults = 50;
 	
-		$params = Array();
-		if ($maxResults !=0 && $startIndex !=0) {
-			$params[] = "max-results=" . $maxResults;
-			$params[] = "start-index=" . $startIndex;
-		}
-		if ($maxResults == 0 && $startIndex != 0) {
-			$params[] = "start-index=" . $startIndex;
-		}
-		if ($maxResults != 0 && $startIndex == 0) {
-			$params[] = "max-results=" . $maxResults;
-		}
+		$params = $this->_getParams( $maxResults , $startIndex );
 		
 		return $this->_httpGet($url , $params);
 	}
@@ -189,20 +149,7 @@ class YouTube {
 		if ( $maxResults > 50 )
 			$maxResults = 50;
 	
-		$params = Array();
-		if ($maxResults !=0 && $startIndex !=0) {
-			$params[] = "max-results=" . $maxResults;
-			$params[] = "start-index=" . $startIndex;
-		}
-		if ($maxResults == 0 && $startIndex != 0) {
-			$params[] = "start-index=" . $startIndex;
-		}
-		if ($maxResults != 0 && $startIndex == 0) {
-			$params[] = "max-results=" . $maxResults;
-		}
-		if ($orderby != 0 ) {
-			$params[] = "orderby=" . $orderby;
-		}
+		$params = $this->_getParams( $maxResults , $startIndex );
 	
 		return $this->_httpGet($url , $params);
 	}
@@ -222,17 +169,7 @@ class YouTube {
 		if ( $maxResults > 50 )
 			$maxResults = 50;
 	
-		$params = Array();
-		if ($maxResults !=0 && $startIndex !=0) {
-			$params[] = "max-results=" . $maxResults;
-			$params[] = "start-index=" . $startIndex;
-		}
-		if ($maxResults == 0 && $startIndex != 0) {
-			$params[] = "start-index=" . $startIndex;
-		}
-		if ($maxResults != 0 && $startIndex == 0) {
-			$params[] = "max-results=" . $maxResults;
-		}
+		$params = $this->_getParams( $maxResults , $startIndex );
 	
 		return $this->_httpGet($url , $params);
 	}
@@ -254,17 +191,7 @@ class YouTube {
 		if ( $maxResults > 50 )
 			$maxResults = 50;
 	
-		$params = Array();
-		if ($maxResults !=0 && $startIndex !=0) {
-			$params[] = "max-results=" . $maxResults;
-			$params[] = "start-index=" . $startIndex;
-		}
-		if ($maxResults == 0 && $startIndex != 0) {
-			$params[] = "start-index=" . $startIndex;
-		}
-		if ($maxResults != 0 && $startIndex == 0) {
-			$params[] = "max-results=" . $maxResults;
-		}
+		$params = $this->_getParams( $maxResults , $startIndex );
 	
 		return $this->_httpGet($url , $params);
 	}
@@ -285,6 +212,27 @@ class YouTube {
 	*** Private functions
 	*****************************************************************************
 	*****************************************************************************/
+    
+    /**
+     * Returns an array containing the parameters that will be included in the request.
+     *
+     * @returns Array
+     */
+    private function _getParams( $maxResult, $startIndex ) {
+        $params = Array();
+    	if ($maxResults !=0 && $startIndex !=0) {
+			$params[] = "max-results=" . $maxResults;
+			$params[] = "start-index=" . $startIndex;
+		}
+		if ($maxResults == 0 && $startIndex != 0) {
+			$params[] = "start-index=" . $startIndex;
+		}
+		if ($maxResults != 0 && $startIndex == 0) {
+			$params[] = "max-results=" . $maxResults;
+		}
+        return $params;
+    }
+    
 	/**
 	* Perform an HTTP get request
 	*
