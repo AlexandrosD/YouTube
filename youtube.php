@@ -218,7 +218,7 @@ class YouTube {
      *
      * @returns Array
      */
-    private function _getParams( $maxResult, $startIndex ) {
+    private function _getParams( $maxResults, $startIndex ) {
         $params = Array();
     	if ($maxResults !=0 && $startIndex !=0) {
 			$params[] = "max-results=" . $maxResults;
