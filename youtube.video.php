@@ -11,6 +11,7 @@
 */
 
 require_once 'youtube.video.comments.php';
+require_once 'youtube.php';
 
 class YouTubeVideo {
 	public $title;
@@ -35,9 +36,30 @@ class YouTubeVideo {
 	*
 	* @param SimpleXMLElement $videoData
 	*/
-	public function __construct( $videoData , $developerKey = NULL ) {
+	public function __construct( $videoData = NULL , $developerKey = NULL , $videoId = NULL ) {
 		$this->_developerKey = $developerKey;
-		$this->_load($videoData);
+		
+		//if video data (xml) is provided then load the video by xml
+		if ( $videoData ) {
+			$this->_load($videoData);
+		}
+		
+		//if video id is provided then make a request to youtube and fetch video data
+		if ( $videoId ) {
+			$this->load($videoId);
+		}
+	}
+	
+	/**
+	 * Load video data using video id
+	 * @param String $videoId
+	 */
+	public function load( $videoId ) {
+		$youtube = new YouTube( $this->_developerKey );
+		$videoData = $youtube->getVideo( $videoId );
+		
+		$xml = new SimpleXMLElement( $videoData );
+		$this->_load( $xml );
 	}
 	
 	/**
