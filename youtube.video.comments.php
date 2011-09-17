@@ -87,7 +87,12 @@ class YouTubeVideoComments {
 		
 		//fetch list data
 		$namespaces = $xml->getNameSpaces(true);
-		$openSearch = $entry->children($namespaces['openSearch']);
+        if ($namespaces) {
+    	    $openSearch = $entry->children($namespaces['openSearch']);
+		}
+        else {
+            return FALSE;
+        }
 		
 		$this->_totalVideos = (int) $openSearch->totalResults;
 		$this->_startIndex = (int) $openSearch->startIndex;

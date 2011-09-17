@@ -77,15 +77,20 @@ class YouTubeVideo {
 		
 		//namespaces
 		$namespaces = $entry->getNameSpaces(true);
-		
-		//media namespace
-		$media = $entry->children($namespaces['media']);
-		//yt namespace
-		$yt = $entry->children($namespaces['yt']);
-		//yt namespace inside media namespace
-		$media_yt = $media->children($namespaces['yt']);
-		//gd namespace
-		$gd = $entry->children($namespaces['gd']);
+        
+        if ($namespaces) {
+    	    //media namespace
+    	    $media = $entry->children($namespaces['media']);
+		    //yt namespace
+	    	$yt = $entry->children($namespaces['yt']);
+		    //yt namespace inside media namespace
+		    $media_yt = $media->children($namespaces['yt']);
+		    //gd namespace
+		    $gd = $entry->children($namespaces['gd']);
+		}
+        else {
+            return FALSE;
+        }
 		
 		//uploader
 		$this->uploader = (string) $media->group->credit;
