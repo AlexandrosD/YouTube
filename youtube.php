@@ -96,7 +96,7 @@ class YouTube {
 		if ( $maxResults > 50 )
 			$maxResults = 50;
 		
-		$params = $this->_getParams( $maxResults , $startIndex );
+		$params = $this->_getParams( $maxResults , $startIndex ); 
 		
 		return $this->_httpGet($url , $params);
 	}
