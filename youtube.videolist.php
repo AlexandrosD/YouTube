@@ -131,7 +131,7 @@ class YouTubeVideoList {
 		
 		//fetch list data
 		$namespaces = $xml->getNameSpaces(true);
-		if (isset($xml->children($namespaces['openSearch']))) {
+		if ($namespaces) {
 		    $openSearch = $xml->children($namespaces['openSearch']);
 		}
         else {
