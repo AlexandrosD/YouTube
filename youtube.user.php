@@ -89,7 +89,7 @@ class YouTubeUser {
     
     public function getFavorites( $maxResults = 0 , $startIndex = 0 ) {
         if ( !$this->_favorites_maxResults == $maxResults || !$this->_favorites_startIndex == $startIndex || !$this->_favorites )
-            $this->_favorites( $maxResults , $startIndex);
+            $this->_loadFavorites( $maxResults , $startIndex);
         
         return $this->_favorites;
     }
