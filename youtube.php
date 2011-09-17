@@ -207,17 +207,6 @@ class YouTube {
 		return $this->_httpGet($url);
 	}
 	
-	/**
-	 * Get a single video's data
-	 * 
-	 * @param String $videoId The video ID
-	 * @return String 
-	 */
-	public function getVideo( $videoId ) {
-		$url = $this->_baseUrl . "api/videos/" . $videoId;
-		return $this->_httpGet($url);
-	}
-	
 	/***************************************************************************
 	****************************************************************************
 	*** Private functions
