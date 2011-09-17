@@ -131,8 +131,12 @@ class YouTubeVideoList {
 		
 		//fetch list data
 		$namespaces = $xml->getNameSpaces(true);
-		//$openSearch = $entry->children($namespaces['openSearch']); //for some reason is buggy on user uploads..
-		$openSearch = $xml->children($namespaces['openSearch']);
+		if (isset($xml->children($namespaces['openSearch']))) {
+		    $openSearch = $xml->children($namespaces['openSearch']);
+		}
+        else {
+            return FALSE;
+        }
         
 		$this->_totalVideos = (int) $openSearch->totalResults;
 		$this->_startIndex = (int) $openSearch->startIndex;
