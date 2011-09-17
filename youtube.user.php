@@ -41,6 +41,10 @@ class YouTubeUser {
     private $_subscriptions_maxResults;
     private $_subscriptions_startIndex;
     
+    private $_favorites;
+    private $_favorites_maxResults;
+    private $_favorites_startIndex;
+    
     private $_developerKey;
     
     public function __construct ( $username , $developerKey = NULL ) {
@@ -81,6 +85,13 @@ class YouTubeUser {
             $this->_loadUploads( $maxResults , $startIndex);
         
         return $this->_uploads;
+    }
+    
+    public function getFavorites( $maxResults = 0 , $startIndex = 0 ) {
+        if ( !$this->_favorites_maxResults == $maxResults || !$this->_favorites_startIndex == $startIndex || !$this->_favorites )
+            $this->_favorites( $maxResults , $startIndex);
+        
+        return $this->_favorites;
     }
     
     public function getSubscriptions( $maxResults = 0 , $startIndex = 0 ) {
@@ -131,7 +142,7 @@ class YouTubeUser {
         $this->_playlists = $playlists;
     }
     
-    public function _loadUploads( $maxResults = 0 , $startIndex = 0 ) {
+    private function _loadUploads( $maxResults = 0 , $startIndex = 0 ) {
     	$this->_uploads_maxResults = $maxResults;
     	$this->_uploads_startIndex = $startIndex;
     	
@@ -141,7 +152,17 @@ class YouTubeUser {
         $this->_uploads = $uploads;
     }
     
-    public function _loadSubscriptions( $maxResults = 0 , $startIndex = 0 ) {
+    private function _loadFavorites( $maxResults = 0 , $startIndex = 0 ) {
+        $this->_favorites_maxResults = $maxResults;
+    	$this->_favorites_startIndex = $startIndex;
+    	
+        $favorites = new YouTubeVideoList( $this->_developerKey );
+        $favorites->load( "FavoritesByUser" , $this->_username , $maxResults , $startIndex );
+        
+        $this->_favorites = $favorites;
+    }
+    
+    private function _loadSubscriptions( $maxResults = 0 , $startIndex = 0 ) {
         //TODO - Phase II
         return FALSE;
     }
