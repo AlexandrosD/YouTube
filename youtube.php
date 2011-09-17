@@ -252,6 +252,9 @@ class YouTube {
 	* @return String
 	*/
 	private function _httpGet( $url , $params = NULL) {
+        //null errors
+        $this->_lastError = NULL;
+        
 		if ($this->_format != NULL) {
 			$params[] = "alt=" . $this->_format;
 		}
