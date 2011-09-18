@@ -28,7 +28,7 @@ class YouTube {
 			$this->_baseUrl = "http://gdata.youtube.com/feeds/";
 		}
 		$this->_format = $format;
-		$this->_debug = TRUE;
+		$this->_debug = FALSE;
 	}
 	
 	/***************************************************************************
