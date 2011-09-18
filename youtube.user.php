@@ -138,7 +138,7 @@ class YouTubeUser {
         
         $ids = array();
         $xml = new SimpleXMLElement( $data );
-        echo ($data);
+        
         //count playlists
         $ns = $xml->getNamespaces(true);
         if ($ns) {
