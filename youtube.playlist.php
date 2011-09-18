@@ -38,6 +38,15 @@ class YouTubePlaylist extends YouTubeVideoList {
 	}
 	
 	/**
+	* Load Playlist Info (No videodata is loaded)
+	*
+	* @return boolean
+	*/
+	public function loadPlaylist( $maxResults = 0 , $startIndex = 0 ) {
+		return $this->_loadInfo();
+	}
+	
+	/**
 	* Load Playlist
 	*
 	* @return boolean
@@ -77,5 +86,15 @@ class YouTubePlaylist extends YouTubeVideoList {
 		
 		//load videos
 		return parent::populate( $playlist );
+	}
+	
+	private function _loadInfo() {
+		$youtube = new YouTube( $this->_developerKey );
+		$playlist =  $youtube->getPlaylist( $this->_id );
+		
+		//load playlist data
+		$xml = new SimpleXMLElement( $playlist );
+		$this->_title = (string) $xml->title;
+		$this->_subtitle = (string) $xml->subtitle;
 	}
 }
