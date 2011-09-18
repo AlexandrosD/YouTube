@@ -30,6 +30,7 @@ class YouTubeUser {
     private $_youtube;
     
     private $_playlists;
+    private $_playlists_count;
     private $_playlists_maxResults;
     private $_playlists_startIndex;
     
@@ -133,11 +134,20 @@ class YouTubeUser {
         
         $ids = array();
         $xml = new SimpleXMLElement( $data );
+        
+        //count playlists
+        $ns = $xml->getNamespaces(true);
+        if ($ns) {
+            $openSearch = $xml->children($ns['openSearch']);
+            $this->_playlists_count = (int) $openSearch->totalResults;
+        }
 
-        foreach ($xml->entry as $playlist) {
-        	$namespaces = $playlist->getNamespaces(true);
-        	$yt = $playlist->children($namespaces['yt']);
-        	$ids[] = $yt->playlistId;
+        if ($xml->entry) {
+            foreach ($xml->entry as $playlist) {
+        	    $namespaces = $playlist->getNamespaces(true);
+        	    $yt = $playlist->children($namespaces['yt']);
+        	    $ids[] = $yt->playlistId;
+            }
         }
         
         $playlists = array();
