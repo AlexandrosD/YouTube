@@ -24,7 +24,6 @@ class YouTubeVideo {
 	public $dislikes;
 	public $likes;
 	public $duration;
-	public $duration_formatted;
 	public $uploaded;
 	public $viewCount;
 	public $favoriteCount;
@@ -126,12 +125,6 @@ class YouTubeVideo {
 		
 		//duration
 		$this->duration = (int) $media_yt->duration->attributes()->seconds;
-		@$mins = (string) (int) ($this->duration / 60);
-		@$secs = (string) (int) ($this->duration % 60);
-		if ( strlen($secs) == 1 )
-			$secs = "0" . $secs;
-		$this->duration_formatted = $mins . ":" . $secs;
-		
 		
 		//uploaded
 		$this->uploaded = (string) $media_yt->uploaded;

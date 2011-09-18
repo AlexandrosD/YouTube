@@ -81,6 +81,10 @@ class YouTubeUser {
         return $this->_playlists; 
     }
     
+    public function getPlaylistsCount() {
+        return $this->_playlists_count;
+    }
+    
     public function getUploads( $maxResults = 0 , $startIndex = 0 ) {
         if ( !$this->_uploads_maxResults == $maxResults || !$this->_uploads_startIndex == $startIndex || !$this->_uploads )
             $this->_loadUploads( $maxResults , $startIndex);
