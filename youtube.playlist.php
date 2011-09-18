@@ -26,6 +26,7 @@ class YouTubePlaylist extends YouTubeVideoList {
 	public function __construct( $playlistId , $developerKey = NULL ) {
 		$this->_id = $playlistId;
 		$this->_developerKey = $developerKey;
+		$this->_loadInfo();
 	}
     
     /**
@@ -35,15 +36,6 @@ class YouTubePlaylist extends YouTubeVideoList {
 	*/
 	public function getID() {
 		return $this->_id;
-	}
-	
-	/**
-	* Load Playlist Info (No videodata is loaded)
-	*
-	* @return boolean
-	*/
-	public function loadInfo() {
-		return $this->_loadInfo();
 	}
 	
 	/**
