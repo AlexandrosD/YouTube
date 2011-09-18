@@ -26,9 +26,8 @@ class YouTubePlaylist extends YouTubeVideoList {
 	public function __construct( $playlistId , $developerKey = NULL ) {
 		$this->_id = $playlistId;
 		$this->_developerKey = $developerKey;
-		$this->_loadInfo();
 	}
-    
+    	
     /**
     * Get Playlist ID
 	*
@@ -78,15 +77,5 @@ class YouTubePlaylist extends YouTubeVideoList {
 		
 		//load videos
 		return parent::populate( $playlist );
-	}
-	
-	private function _loadInfo() {
-		$youtube = new YouTube( $this->_developerKey );
-		$playlist =  $youtube->getPlaylist( $this->_id );
-		
-		//load playlist data
-		$xml = new SimpleXMLElement( $playlist );
-		$this->_title = (string) $xml->title;
-		$this->_subtitle = (string) $xml->subtitle;
 	}
 }
