@@ -42,7 +42,7 @@ class YouTubePlaylist extends YouTubeVideoList {
 	*
 	* @return boolean
 	*/
-	public function loadPlaylist( $maxResults = 0 , $startIndex = 0 ) {
+	public function loadInfo() {
 		return $this->_loadInfo();
 	}
 	
