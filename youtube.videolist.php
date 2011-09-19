@@ -85,6 +85,10 @@ class YouTubeVideoList {
 		
 		if ( $format == 'json' )
 			return $this->_parseJson( $data);
+		
+		if ( $format == 'array' )
+			$this->_videos = $data;
+		
 		/* else */
 		return $this->_parseAtom( $data);
 	}	
