@@ -59,7 +59,7 @@ class YouTubeVideo {
 		$youtube = new YouTube( $this->_developerKey );
 		$videoData = $youtube->getVideo( $videoId );
 		
-		if (!$videoData == "BAD_REQUEST") {
+		if ($videoData != "BAD_REQUEST") {
 			$xml = new SimpleXMLElement( $videoData );
 			$this->_load( $xml );
 		}

@@ -305,7 +305,7 @@ class YouTube {
 			$this->_lastError = $err;
 		}
 		
-		if ($http_status == 400) {
+		if ($http_status == "400") {
 			return "BAD_REQUEST";
 		}
 		//return data
