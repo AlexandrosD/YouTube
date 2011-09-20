@@ -292,8 +292,10 @@ class YouTube {
 		ob_start();
 		
 		//fetch data
+		$http_status = NULL;
 		try {
 			curl_exec($ch);
+			$http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 			curl_close($ch);
 			$data = ob_get_contents();
 			ob_end_clean();
@@ -303,6 +305,9 @@ class YouTube {
 			$this->_lastError = $err;
 		}
 		
+		if ($http_status == 400) {
+			return "BAD_REQUEST";
+		}
 		//return data
 		return $data;
 	} 	

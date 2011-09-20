@@ -59,8 +59,10 @@ class YouTubeVideo {
 		$youtube = new YouTube( $this->_developerKey );
 		$videoData = $youtube->getVideo( $videoId );
 		
-		$xml = new SimpleXMLElement( $videoData );
-		$this->_load( $xml );
+		if (!$videoData == "BAD_REQUEST") {
+			$xml = new SimpleXMLElement( $videoData );
+			$this->_load( $xml );
+		}
 	}
 	
 	/**
@@ -143,6 +145,5 @@ class YouTubeVideo {
 		
 		//comments
 		$this->comments = new YouTubeVideoComments($this->videoId , $this->_developerKey );
-	}
-	
+	}	
 }
