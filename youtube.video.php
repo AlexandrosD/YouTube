@@ -55,7 +55,7 @@ class YouTubeVideo {
 	 * Load video data using video id
 	 * @param String $videoId
 	 */
-	public function load( $videoId ) { 
+	public function load( $videoId ) {
 		$youtube = new YouTube( $this->_developerKey );
 		$videoData = $youtube->getVideo( $videoId );
 		

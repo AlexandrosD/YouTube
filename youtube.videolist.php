@@ -91,7 +91,7 @@ class YouTubeVideoList {
 	*
 	* @param int $count The number of videos
 	*/
-	public function setVideosCount() {
+	public function setVideosCount( $count ) {
 		$this->_totalVideos = $count;
 	}
 	

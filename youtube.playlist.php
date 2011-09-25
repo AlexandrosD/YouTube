@@ -60,10 +60,28 @@ class YouTubePlaylist extends YouTubeVideoList {
 	/**
 	* Fetch playlist's subtitle
 	*
-	* @return String The playlist's title
+	* @return String The playlist's subtitle
 	*/
 	public function getSubtitle() {
 		return $this->_subtitle;
+	}
+	
+	/**
+	* Set playlist's title
+	*
+	* @param String $title The playlist's title
+	*/
+	public function setTitle( $title ) {
+		$this->_title = $title;
+	}
+	
+	/**
+	* Set playlist's subtitle
+	*
+	* @param String $subtitle The playlist's subtitle
+	*/
+	public function setSubtitle( $subtitle ) {
+		$this->_subtitle = $subtitle;
 	}
 	
 	private function _loadVideos(){
