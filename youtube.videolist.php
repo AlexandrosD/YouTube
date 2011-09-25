@@ -33,6 +33,8 @@ class YouTubeVideoList {
 	* Public Functions
 	**************************************************************************/
 	
+	/**** GETTERS ****/
+	
 	/**
 	* Fetch list's videos
 	*
@@ -70,6 +72,48 @@ class YouTubeVideoList {
 	public function getMaxResults() {
 		return $this->_maxResults;
 	}
+	
+	/**** SETTERS *****/
+	
+	/**
+	* Set list's videos
+	*
+	* @param array $videos A YouTubeVideo() array holding playlist's videos
+	*/
+	public function setVideos( $videos ) {
+		$this->_videos = $videos;
+	}
+	
+	/**
+	
+	/**
+	* Set Count list's videos
+	*
+	* @param int $count The number of videos
+	*/
+	public function setVideosCount() {
+		$this->_totalVideos = $count;
+	}
+	
+	/**
+	 * Set Start Index
+	 *
+	 * @param int $startIndex The starting index
+	 */
+	public function setStartIndex( $startIndex ) {
+		$this->_startIndex = $startIndex;
+	}
+	
+	/**
+	 * Set maximum Results
+	 *
+	 * @param int $maxResults The maximum results
+	 */
+	public function setMaxResults( $maxResults ) {
+		$this->_maxResults = $maxResults;
+	}
+	
+	/**** POLPULATE / LOAD ****/
 	
 	/**
 	* Populate the list with an ATOM 1.0, RSS 2.0 or JSON feed
