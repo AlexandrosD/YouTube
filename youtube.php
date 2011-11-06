@@ -52,7 +52,7 @@ class YouTube {
 	* @return String
 	*/
 	public function getSearchResults ( $keywords , $maxResults = 0 , $startIndex = 0 ) {
-		$url = $this->_baseUrl . "api/videos/-/{http://gdata.youtube.com/schemas/2007/keywords.cat}" . $playlist;
+		$url = $this->_baseUrl . "api/videos/-/%7Bhttp%3A%2F%2Fgdata.youtube.com%2Fschemas%2F2007%2Fkeywords.cat%7D" . $keywords;
 		
 		//YouTube limits maxResults to 50
 		if ( $maxResults > 50 )

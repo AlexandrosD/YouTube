@@ -155,7 +155,7 @@ class YouTubeVideoList {
 			$this->_youtube = new YouTube( $this->_developerKey );
 		
 		$data = $this->_youtube-> $functionName ( $key , $maxResults , $startIndex );
-		
+
 		if ($data) {
 			return $this->_parseAtom( $data );
 		}
