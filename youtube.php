@@ -46,6 +46,24 @@ class YouTube {
 	}
 	
 	/**
+	* Search for videos
+	*
+	* @param String $keywords The search keywords
+	* @return String
+	*/
+	public function getSearchResults ( $keywords , $maxResults = 0 , $startIndex = 0 ) {
+		$url = $this->_baseUrl . "api/videos/-/{http://gdata.youtube.com/schemas/2007/keywords.cat}" . $playlist;
+		
+		//YouTube limits maxResults to 50
+		if ( $maxResults > 50 )
+			$maxResults = 50;
+		
+		$params = $this->_getParams( $maxResults , $startIndex ); 
+		
+		return $this->_httpGet($url , $params);
+	}
+	
+	/**
 	* Load a specific user's playlists
 	*
 	* @param String $username The username
